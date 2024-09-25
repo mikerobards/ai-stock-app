@@ -41,7 +41,8 @@ async function fetchStockData() {
     loadingArea.style.display = 'flex'
     try {
         const stockData = await Promise.all(tickersArr.map(async (ticker) => {
-            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${process.env.POLYGON_API_KEY}`
+            const api_key = import.meta.env.VITE_POLYGON_API_KEY
+            const url = `https://api.polygon.io/v2/aggs/ticker/${ticker}/range/1/day/${dates.startDate}/${dates.endDate}?apiKey=${api_key}`
             const response = await fetch(url)
             const data = await response.text()
             const status = await response.status
@@ -49,11 +50,12 @@ async function fetchStockData() {
                 apiMessage.innerText = 'Creating report...'
                 return data
             } else {
+                console.log(url, api_key)
                 loadingArea.innerText = 'There was an error fetching stock data.'
             }
         }))
         fetchReport(stockData.join(''))
-    } catch(err) {
+    } catch (err) {
         loadingArea.innerText = 'There was an error fetching stock data.'
         console.error('error: ', err)
     }
