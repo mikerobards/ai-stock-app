@@ -1,4 +1,5 @@
 import { dates } from '/utils/dates'
+import OpenAI from "openai"
 
 const tickersArr = []
 
@@ -61,8 +62,34 @@ async function fetchStockData() {
     }
 }
 
+const openai = new OpenAI({
+    apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+    dangerouslyAllowBrowser: true
+});
+
+const messages = [
+    { "role": "system", "content": "You are a helpful stock market expert." },
+    { "role": "user", "content": "Take the data returned from " }
+    // { "role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020." },
+    // { "role": "user", "content": "Where was it played?" }
+]
+
 async function fetchReport(data) {
-    /** AI goes here **/
+    console.log(data)
+    const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+            { "role": "system", "content": "You are a helpful stock market expert." },
+            { "role": "assistant", "content": data },
+            { "role": "user", "content": "Generate a report advising on whether to buy or sell the shares based on data." }
+            // { "role": "user", "content": "Where was it played?" }
+        ]
+
+    });
+
+    console.log(completion.choices[0].message.content);
+
+    renderReport(completion.choices[0].message.content)
 }
 
 function renderReport(output) {
@@ -73,3 +100,4 @@ function renderReport(output) {
     report.textContent = output
     outputArea.style.display = 'flex'
 }
+
