@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8" />
     <title>Dodgy Dave's Stock Predictions</title>
     <link rel="stylesheet" href="index.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Poppins:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&amp;family=Poppins:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -24,11 +25,11 @@
         <form id="ticker-input-form">
           <label for="ticker-input">
             Add up to 3 stock tickers below to get a super accurate stock
-            predictions report👇
+            predictions report
           </label>
           <div class="form-input-control">
             <input type="text" id="ticker-input" placeholder="MSFT" />
-            <button class="add-ticker-btn">
+            <button type="submit" class="add-ticker-btn">
               <img src="images/add.svg" class="add-ticker-svg" alt="add" />
             </button>
           </div>
@@ -44,7 +45,7 @@
         <div id="api-message">Querying Stocks API...</div>
       </section>
       <section class="output-panel">
-        <h2>Your Report 😜</h2>
+        <h2>Your Report</h2>
       </section>
     </main>
     <footer>&copy; This is not real financial advice!</footer>

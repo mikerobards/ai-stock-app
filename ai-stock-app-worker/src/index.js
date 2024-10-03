@@ -13,8 +13,16 @@ export default {
 			return new Response(null, { headers: corsHeaders });
 		}
 
+		// Only process POST requests
+		if (request.method !== 'POST') {
+			return new Response(JSON.stringify({ error: `${request.method} method not allowed.` }), {
+				status: 405, headers: corsHeaders
+			})
+		}
+
 		const openai = new OpenAI({
-			apiKey: env.OPENAI_API_KEY
+			apiKey: env.OPENAI_API_KEY,
+			baseURL: 'https://gateway.ai.cloudflare.com/v1/f9beb65d3673c27dacc2f9ee5b70addc/stock-predictions/openai'
 		})
 
 		try {
@@ -30,7 +38,7 @@ export default {
 
 			return new Response(JSON.stringify(response), { headers: corsHeaders });
 		} catch (e) {
-			return new Response(e, { headers: corsHeaders })
+			return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders })
 		}
 	},
 };
